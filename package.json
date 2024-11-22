@@ -1,0 +1,36 @@
+{
+  "name": "xray-logs",
+  "packageManager": "yarn@3.6.4",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "A modern, high-performance log management and comparison application",
+  "author": "XRay Log Team",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/XRay-Log/xray"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.1.1",
+    "@tauri-apps/cli": "^2.1.0",
+    "framer-motion": "^11.11.17",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.3.0",
+    "react-syntax-highlighter": "^15.6.1",
+    "uuid": "^11.0.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.15",
+    "vite": "^5.0.0"
+  }
+}
