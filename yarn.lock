@@ -627,7 +627,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tauri-apps/api@npm:^2.0.0, @tauri-apps/api@npm:^2.1.1":
+"@tauri-apps/api@npm:^2.1.1":
   version: 2.1.1
   resolution: "@tauri-apps/api@npm:2.1.1"
   checksum: 3ede9befcb6cf1bca8984041965dcbefce10a3429cfac06b2e0ee2672e802597c64043bb9096ddc802e75b6255405ff3402b3ba30cee272ef985e3ef4d31bb38
@@ -742,24 +742,6 @@ __metadata:
   bin:
     tauri: tauri.js
   checksum: 52f4305c93ae70e7187b3353aaad199faed91a37962d8f1e36d19ce566155766d98b6fe318df60f2fb66e8b2887e59b856afaab705f160c9db3833afe7641272
-  languageName: node
-  linkType: hard
-
-"@tauri-apps/plugin-dialog@npm:~2":
-  version: 2.0.1
-  resolution: "@tauri-apps/plugin-dialog@npm:2.0.1"
-  dependencies:
-    "@tauri-apps/api": ^2.0.0
-  checksum: e5c27f3a546cf496bb5c97b112146c0cea5147d9a034af3c0c62986a446f3bdab3d770ba5915db770bc905df149c4f9fa73549cdb2ecee52d496975455ccf612
-  languageName: node
-  linkType: hard
-
-"@tauri-apps/plugin-fs@npm:~2":
-  version: 2.0.2
-  resolution: "@tauri-apps/plugin-fs@npm:2.0.2"
-  dependencies:
-    "@tauri-apps/api": ^2.0.0
-  checksum: affdb1698f5b2afd6c8c1c48cc1efc41d8da99c22721ef60e3f271d3a3ee06e04febb5f492b42b7bf4bfbeab4a2ba6e2b2395d0c61a40910fa51c672c95aa557
   languageName: node
   linkType: hard
 
@@ -2859,14 +2841,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xrayapp@workspace:.":
+"xray-logs@workspace:.":
   version: 0.0.0-use.local
-  resolution: "xrayapp@workspace:."
+  resolution: "xray-logs@workspace:."
   dependencies:
     "@tauri-apps/api": ^2.1.1
     "@tauri-apps/cli": ^2.1.0
-    "@tauri-apps/plugin-dialog": ~2
-    "@tauri-apps/plugin-fs": ~2
     "@vitejs/plugin-react": ^4.2.1
     autoprefixer: ^10.4.20
     framer-motion: ^11.11.17

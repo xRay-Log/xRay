@@ -21,7 +21,7 @@ Thank you for your interest in contributing to xRay Logs! Here's how you can hel
 
 ## Reporting Issues
 
-If you find a bug or have a suggestion, please open an issue at [GitHub Issues](https://github.com/XRay-Log/xray/issues).
+If you find a bug or have a suggestion, please open an issue at [GitHub Issues](https://github.com/XRay-Log/xRay/issues).
 
 Include:
 - A clear description of the issue
