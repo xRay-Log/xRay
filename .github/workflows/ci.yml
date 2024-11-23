@@ -1,12 +1,8 @@
 name: CI/CD
 
 on:
-  push:
-    branches: [ main ]
-    tags:
-      - 'v*'
-  pull_request:
-    branches: [ main ]
+  release:
+    types: [created]
 
 jobs:
   build:
@@ -88,4 +84,4 @@ jobs:
           prerelease: false
           generate_release_notes: true
         env:
-          GITHUB_TOKEN: ${{ secrets.XRAY_TOKEN }}
+          token: ${{ secrets.XRAY_TOKEN }}
