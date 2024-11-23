@@ -51,7 +51,6 @@ src/
 ├── context/            # React context for state management
 ├── hooks/              # Custom React hooks
 │   ├── useBookmarks    # Bookmark management
-│   ├── useLogFilter    # Log filtering logic
 │   ├── useLogSelection # Log selection handling
 │   └── useServerStatus # Server connection status
 ├── db/                 # IndexedDB configuration
