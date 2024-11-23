@@ -1,0 +1,91 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ main ]
+    tags:
+      - 'v*'
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: "macos-latest"
+            args: "--target aarch64-apple-darwin"
+            artifact_name: "xRay_aarch64.dmg"
+          - platform: "macos-latest"
+            args: "--target x86_64-apple-darwin"
+            artifact_name: "xRay_x64.dmg"
+          - platform: "ubuntu-latest"
+            args: ""
+            artifact_name: "xRay.AppImage"
+          - platform: "windows-latest"
+            args: ""
+            artifact_name: "xRay_x64.msi"
+
+    runs-on: ${{ matrix.platform }}
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js 22.9
+      uses: actions/setup-node@v3
+      with:
+        node-version: 22.9
+    - name: Install Yarn
+      run: |
+        corepack enable
+        corepack prepare yarn@3.6.4 --activate
+        
+    - name: Install Rust (stable)
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+    
+    - name: Install dependencies (ubuntu only)
+      if: matrix.platform == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libjavascriptcoregtk-4.1-dev libappindicator3-dev librsvg2-dev  pkg-config patchelf libsoup-3.0-dev libglib2.0-dev
+    
+    - name: Install frontend dependencies
+      run: yarn install
+      
+    - name: Build
+      run: yarn tauri build ${{ matrix.args }}
+      
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ matrix.artifact_name }}
+        path: |
+          src-tauri/target/release/bundle/dmg/${{ matrix.artifact_name }}
+          src-tauri/target/release/bundle/msi/${{ matrix.artifact_name }}
+          src-tauri/target/release/bundle/appimage/${{ matrix.artifact_name }}
+        if-no-files-found: ignore
+
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/download-artifact@v3
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            **/xRay_aarch64.dmg
+            **/xRay_x64.dmg
+            **/xRay.AppImage
+            **/xRay_x64.msi
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

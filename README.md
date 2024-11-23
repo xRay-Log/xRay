@@ -8,8 +8,9 @@ A modern, high-performance log management and comparison application built with 
 
 <div align="center">
 
-[![Download for macOS](https://img.shields.io/badge/Download_for_macOS-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/XRay-Log/xRay/releases/latest/download/xRay.dmg)
-[![Download for Windows](https://img.shields.io/badge/Download_for_Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/XRay-Log/xRay/releases/latest/download/xRay_x64.msi)
+[![Download for macOS (Apple Silicon)](https://img.shields.io/badge/Download_for_macOS-M1/M2-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/XRay-Log/xRay/releases/latest/download/xRay_aarch64.dmg)
+[![Download for macOS (Intel)](https://img.shields.io/badge/Download_for_macOS-Intel-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/XRay-Log/xRay/releases/latest/download/xRay_x64.dmg)
+[![Download for Windows](https://img.shields.io/badge/Download_for_Windows-0078D4?style=for-the-badge&logo=windows11&logoColor=white)](https://github.com/XRay-Log/xRay/releases/latest/download/xRay_x64.msi)
 [![Download for Linux](https://img.shields.io/badge/Download_for_Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://github.com/XRay-Log/xRay/releases/latest/download/xRay.AppImage)
 
 </div>
