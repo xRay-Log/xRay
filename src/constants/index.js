@@ -7,22 +7,12 @@ export const API_ENDPOINTS = {
   BASE_URL
 };
 
-// Database Constants
-export const DB_CONSTANTS = {
-  DB_NAME: 'xrayLogDB',
-  DB_VERSION: 2,  // Increased version for the new store
-  STORES: {
-    LOGS: 'logs',
-    BOOKMARKS: 'bookmarks'
-  }
-};
-
 // Log Levels
 export const LOG_LEVELS = [
-  { level: 'error', color: '#EF4444' },
-  { level: 'warning', color: '#F59E0B' },
-  { level: 'info', color: '#3B82F6' },
-  { level: 'debug', color: '#10B981' }
+  { level: 'error', color: '#ef4444', label: 'Error' },
+  { level: 'warn', color: '#f59e0b', label: 'Warning' },
+  { level: 'info', color: '#3b82f6', label: 'Info' },
+  { level: 'debug', color: '#10b981', label: 'Debug' }
 ];
 
 // Time Constants
