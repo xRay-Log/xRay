@@ -133,17 +133,6 @@ export const LogProvider = ({ children }) => {
     }
   }, [dbInstance]);
 
-  const getProjectLogs = useCallback(async (project) => {
-    if (!dbInstance || !project) return [];
-
-    try {
-      return await db.getLogsByProject(dbInstance, project);
-    } catch (error) {
-      console.error('Project logs retrieval error:', error);
-      return [];
-    }
-  }, [dbInstance]);
-
   const toggleLogSelection = useCallback((logId) => {
     setSelectedLogs(prev => {
       if (prev.includes(logId)) return prev.filter(id => id !== logId);
@@ -198,7 +187,6 @@ export const LogProvider = ({ children }) => {
     setSelectedProject,
     deleteLog,
     clearLogs,
-    getProjectLogs,
     darkMode,
     setDarkMode,
     selectedLogs,
@@ -214,9 +202,9 @@ export const LogProvider = ({ children }) => {
     setShowBookmarksOnly
   }), [
     filteredLogs, logs, projects, selectedProject, deleteLog, 
-    clearLogs, getProjectLogs, darkMode, selectedLogs, 
-    toggleLogSelection, startComparison, cancelComparison,
-    isComparing, bookmarkedLogs, toggleBookmark, selectedLevels,
+    clearLogs, darkMode, selectedLogs, toggleLogSelection, 
+    startComparison, cancelComparison, isComparing, 
+    bookmarkedLogs, toggleBookmark, selectedLevels,
     showBookmarksOnly
   ]);
 
