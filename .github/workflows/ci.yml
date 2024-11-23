@@ -27,6 +27,11 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
     
+    - name: Install Yarn
+      run: |
+        corepack enable
+        corepack prepare yarn@3.6.4 --activate
+        
     - name: Install Rust (stable)
       uses: dtolnay/rust-toolchain@stable
     
