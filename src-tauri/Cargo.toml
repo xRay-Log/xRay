@@ -1,10 +1,10 @@
 [package]
 name = "xRay"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
-license = ""
-repository = ""
+description = "A modern, high-performance log management and comparison application"
+authors = ["XRay Log Team"]
+license = "MIT"
+repository = "https://github.com/XRay-Log/xRay"
 edition = "2021"
 rust-version = "1.77.2"
 
@@ -20,18 +20,14 @@ tauri-build = { version = "2.0.0-beta", features = [] }
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-log = "0.4"
 tauri = { version = "2.0.0-beta", features = [] }
+tokio = { version = "1.0", features = ["full"] }
 tauri-plugin-log = "2.0.0-rc"
 tauri-plugin-dialog = "2"
 tauri-plugin-fs = "2"
-tokio = { version = "1.0", features = ["full"] }
+log = "0.4.20"
 axum = "0.7.2"
 tower-http = { version = "0.5.0", features = ["cors"] }
-tracing = "0.1"
-tracing-subscriber = "0.3"
 
 [features]
-# by default Tauri runs in production mode
-# when `tauri dev` runs it is executed with `cargo run --no-default-features` if `devPath` is an URL
 custom-protocol = ["tauri/custom-protocol"]

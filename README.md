@@ -2,17 +2,15 @@
 
 A modern, high-performance log management and comparison application built with React and Tauri.
 
-> ⚠️ **Beta Notice**: This project is currently in beta. While it's stable for basic use, you may encounter some bugs or missing features. We appreciate your feedback and contributions to help improve the application!
-
-![xRay Logs Dark Mode](https://media.licdn.com/dms/image/v2/D4D22AQGMdhIcg6tm9g/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1732297848909?e=1735171200&v=beta&t=k_kukR_drXE7j-rg7v36_UzsoHi10FFZKnctdOVfItc)
+![XRay Logs Dark Mode](https://media.licdn.com/dms/image/v2/D4D22AQGMdhIcg6tm9g/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1732297848909?e=1735171200&v=beta&t=k_kukR_drXE7j-rg7v36_UzsoHi10FFZKnctdOVfItc)
 
 ## Download
 
 <div align="center">
 
-[![Download for macOS](https://img.shields.io/badge/Download_for_macOS-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/XRay-Log/xray/releases/latest/download/xRay.dmg)
-[![Download for Windows](https://img.shields.io/badge/Download_for_Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/XRay-Log/xray/releases/latest/download/xRay_x64.msi)
-[![Download for Linux](https://img.shields.io/badge/Download_for_Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://github.com/XRay-Log/xray/releases/latest/download/xray.AppImage)
+[![Download for macOS](https://img.shields.io/badge/Download_for_macOS-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/XRay-Log/xRay/releases/latest/download/xRay.dmg)
+[![Download for Windows](https://img.shields.io/badge/Download_for_Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/XRay-Log/xRay/releases/latest/download/xRay_x64.msi)
+[![Download for Linux](https://img.shields.io/badge/Download_for_Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://github.com/XRay-Log/xRay/releases/latest/download/xRay.AppImage)
 
 </div>
 
@@ -63,8 +61,8 @@ src/
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/XRay-Log/xray.git
-cd xray
+git clone https://github.com/XRay-Log/xRay.git
+cd xRay
 ```
 
 2. Install dependencies:
