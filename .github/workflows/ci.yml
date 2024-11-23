@@ -12,19 +12,19 @@ jobs:
         include:
           - platform: "macos-latest"
             args: "--target aarch64-apple-darwin"
-            binary_path: "src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/xRay*.dmg"
+            binary_path: "src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/*.dmg"
             artifact_name: "xRay_aarch64.dmg"
           - platform: "macos-latest"
             args: "--target x86_64-apple-darwin"
-            binary_path: "src-tauri/target/x86_64-apple-darwin/release/bundle/dmg/xRay*.dmg"
+            binary_path: "src-tauri/target/x86_64-apple-darwin/release/bundle/dmg/*.dmg"
             artifact_name: "xRay_x64.dmg"
           - platform: "ubuntu-latest"
             args: ""
-            binary_path: "src-tauri/target/release/bundle/appimage/xRay*.AppImage"
+            binary_path: "src-tauri/target/release/bundle/appimage/*.AppImage"
             artifact_name: "xRay.AppImage"
           - platform: "windows-latest"
             args: ""
-            binary_path: "src-tauri/target/release/bundle/msi/xRay*.msi"
+            binary_path: "src-tauri/target/release/bundle/msi/*.msi"
             artifact_name: "xRay_x64.msi"
 
     runs-on: ${{ matrix.platform }}
@@ -59,11 +59,18 @@ jobs:
     - name: Build
       run: yarn tauri build ${{ matrix.args }}
       
+    - name: Rename artifacts
+      shell: bash
+      run: |
+        if [ -f ${{ matrix.binary_path }} ]; then
+          mv ${{ matrix.binary_path }} ${{ matrix.artifact_name }}
+        fi
+      
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
         name: ${{ matrix.artifact_name }}
-        path: ${{ matrix.binary_path }}
+        path: ${{ matrix.artifact_name }}
         if-no-files-found: error
 
   release:
