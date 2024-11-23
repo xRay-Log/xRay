@@ -1,5 +1,5 @@
 {
-  "name": "xray-logs",
+  "name": "xray",
   "packageManager": "yarn@3.6.4",
   "private": true,
   "version": "0.1.0",
@@ -8,7 +8,7 @@
   "author": "XRay Log Team",
   "repository": {
     "type": "git",
-    "url": "https://github.com/XRay-Log/xray"
+    "url": "https://github.com/XRay-Log/xRay"
   },
   "scripts": {
     "dev": "vite",
