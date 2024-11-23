@@ -25,15 +25,7 @@ export const LOG_LEVELS = [
   { level: 'debug', color: '#10B981' }
 ];
 
-// Animation Constants
-export const ANIMATION_VARIANTS = {
-  initial: { opacity: 0, y: -10 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -10 }
-};
-
 // Time Constants
 export const TIME_INTERVALS = {
-  SERVER_HEALTH_CHECK: 5000,
-  TIME_UPDATE: 1000
+  SERVER_HEALTH_CHECK: 5000
 };
