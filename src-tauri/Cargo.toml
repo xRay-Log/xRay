@@ -28,6 +28,7 @@ tauri-plugin-fs = "2"
 log = "0.4.20"
 axum = "0.7.2"
 tower-http = { version = "0.5.0", features = ["cors"] }
+tauri-plugin-shell = "2"
 
 [features]
 custom-protocol = ["tauri/custom-protocol"]

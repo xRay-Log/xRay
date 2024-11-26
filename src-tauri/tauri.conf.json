@@ -39,9 +39,10 @@
     "shortDescription": "",
     "macOS": {
       "frameworks": [],
-      "minimumSystemVersion": "",
+      "minimumSystemVersion": "10.13",
       "exceptionDomain": "",
       "signingIdentity": null,
+      "providerShortName": null,
       "entitlements": null
     },
     "windows": {

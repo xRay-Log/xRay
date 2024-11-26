@@ -627,7 +627,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tauri-apps/api@npm:^2.1.1":
+"@tauri-apps/api@npm:^2.0.0, @tauri-apps/api@npm:^2.1.1":
   version: 2.1.1
   resolution: "@tauri-apps/api@npm:2.1.1"
   checksum: 3ede9befcb6cf1bca8984041965dcbefce10a3429cfac06b2e0ee2672e802597c64043bb9096ddc802e75b6255405ff3402b3ba30cee272ef985e3ef4d31bb38
@@ -742,6 +742,15 @@ __metadata:
   bin:
     tauri: tauri.js
   checksum: 52f4305c93ae70e7187b3353aaad199faed91a37962d8f1e36d19ce566155766d98b6fe318df60f2fb66e8b2887e59b856afaab705f160c9db3833afe7641272
+  languageName: node
+  linkType: hard
+
+"@tauri-apps/plugin-shell@npm:~2":
+  version: 2.0.1
+  resolution: "@tauri-apps/plugin-shell@npm:2.0.1"
+  dependencies:
+    "@tauri-apps/api": ^2.0.0
+  checksum: ee7e1f786392d406df19d12b805bc936436e5dc7a1f9c4b815fdab3f84743807997774d1c029ad9fec4763a5f2bd2ed8e1afb30935846acde5efb2e96bb0796c
   languageName: node
   linkType: hard
 
@@ -1122,6 +1131,24 @@ __metadata:
     supports-color:
       optional: true
   checksum: 822d74e209cd910ef0802d261b150314bbcf36c582ccdbb3e70f0894823c17e49a50d3e66d96b633524263975ca16b6a833f3e3b7e030c157169a5fabac63160
+  languageName: node
+  linkType: hard
+
+"dexie-react-hooks@npm:^1.1.7":
+  version: 1.1.7
+  resolution: "dexie-react-hooks@npm:1.1.7"
+  peerDependencies:
+    "@types/react": ">=16"
+    dexie: ^3.2 || ^4.0.1-alpha
+    react: ">=16"
+  checksum: d1133546ab8d345a8e10d38d272eaa1efa3a34e7bdefacd2acc2419f30e52ea02ab29b19d8911755fbda5882e59d132ba5c3cb840dd4430d3cbca15ef5ea610e
+  languageName: node
+  linkType: hard
+
+"dexie@npm:^4.0.10":
+  version: 4.0.10
+  resolution: "dexie@npm:4.0.10"
+  checksum: 5023478791d86e6723c4c2653544eb218095ac725a57f9597d611b716ecb0b848c4a6a123da27dbc01081f033d83d5ef21dd60744afc97f4d3dd03ad22739e83
   languageName: node
   linkType: hard
 
@@ -2275,6 +2302,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react18-json-view@npm:^0.2.8":
+  version: 0.2.8
+  resolution: "react18-json-view@npm:0.2.8"
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: e306920db55d246dd021c537cf40acaa6783de7821afed101467756d9099b028d01ea4358d23d01d4961e0c9a4cb43acf391ddabe5150775a56c218063a96df4
+  languageName: node
+  linkType: hard
+
 "react@npm:^18.3.1":
   version: 18.3.1
   resolution: "react@npm:18.3.1"
@@ -2847,14 +2883,18 @@ __metadata:
   dependencies:
     "@tauri-apps/api": ^2.1.1
     "@tauri-apps/cli": ^2.1.0
+    "@tauri-apps/plugin-shell": ~2
     "@vitejs/plugin-react": ^4.2.1
     autoprefixer: ^10.4.20
+    dexie: ^4.0.10
+    dexie-react-hooks: ^1.1.7
     framer-motion: ^11.11.17
     postcss: ^8.4.49
     react: ^18.3.1
     react-dom: ^18.3.1
     react-icons: ^5.3.0
     react-syntax-highlighter: ^15.6.1
+    react18-json-view: ^0.2.8
     tailwindcss: ^3.4.15
     uuid: ^11.0.3
     vite: ^5.0.0

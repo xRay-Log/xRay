@@ -1,10 +1,10 @@
-import React, { useState, memo, useCallback } from 'react';
-import { FaExchangeAlt, FaTimes, FaCog, FaSun, FaMoon } from 'react-icons/fa';
+import React, { useState, useCallback } from 'react';
+import { FaExchangeAlt, FaTimes, FaCog, FaSun, FaMoon, FaGithub } from 'react-icons/fa';
 import { useServerStatus } from '../../hooks';
-import CompareModal from '../CompareModal';
 import { useLog } from '../../context/LogContext';
+import { open } from '@tauri-apps/plugin-shell';
 
-const ServerInfoTooltip = memo(({ isConnected, show }) => {
+const ServerInfoTooltip = ({ isConnected, show }) => {
   if (!show) return null;
   
   const serverInfo = [
@@ -17,8 +17,7 @@ const ServerInfoTooltip = memo(({ isConnected, show }) => {
   return (
     <div className="absolute bottom-full left-0 mb-2 p-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg 
       border border-gray-200 dark:border-gray-700 min-w-[200px] z-50
-      animate-in fade-in duration-200 slide-in-from-bottom-2"
-    >
+      animate-in fade-in duration-200 slide-in-from-bottom-2">
       <div className="space-y-1.5 text-xs">
         {serverInfo.map(({ label, value, color }) => (
           <div key={label} className="flex justify-between items-center">
@@ -30,121 +29,20 @@ const ServerInfoTooltip = memo(({ isConnected, show }) => {
       <div className="absolute -bottom-1 left-2 w-2 h-2 bg-white dark:bg-gray-800 border-r border-b border-gray-200 dark:border-gray-700 transform rotate-45" />
     </div>
   );
-});
-
-const StatusIndicator = memo(({ isConnected, showServerInfo, onToggle }) => (
-  <div className="relative status-indicator">
-    <div 
-      className={`w-3 h-3 ${isConnected ? 'bg-green-500' : 'bg-red-500'} rounded-full cursor-pointer`}
-      onClick={onToggle}
-    >
-      {isConnected && (
-        <div className="absolute w-3 h-3 bg-green-500 rounded-full animate-ping" />
-      )}
-    </div>
-    <ServerInfoTooltip isConnected={isConnected} show={showServerInfo} />
-  </div>
-));
-
-const LogCount = memo(({ count }) => (
-  <span className="text-sm text-gray-500 dark:text-gray-400">
-    {count} logs
-  </span>
-));
-
-const CompareButton = memo(({ isComparing, onStart, onCancel }) => {
-  if (isComparing) {
-    return (
-      <button
-        onClick={onCancel}
-        className="px-2.5 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm font-medium transition-colors"
-      >
-        Cancel
-      </button>
-    );
-  }
-  
-  return (
-    <button
-      onClick={onStart}
-      className="px-2.5 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-md text-sm font-medium transition-colors"
-    >
-      Compare
-    </button>
-  );
-});
-
-const SelectedLogs = memo(({ logs, onRemove }) => (
-  <div className="flex items-center space-x-2 bg-gray-50 dark:bg-gray-700/50 px-2 py-1 rounded-md">
-    {logs.map((log, index) => (
-      <React.Fragment key={log.id}>
-        <div className="flex items-center space-x-1">
-          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-            Log {index + 1}
-          </span>
-          <button
-            onClick={() => onRemove(log.id)}
-            className="p-0.5 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-full text-gray-500 dark:text-gray-400"
-          >
-            <FaTimes className="w-3 h-3" />
-          </button>
-        </div>
-        {index === 0 && logs.length === 2 && (
-          <FaExchangeAlt className="w-3 h-3 text-gray-400 mx-1" />
-        )}
-      </React.Fragment>
-    ))}
-  </div>
-));
-
-const ThemeToggle = memo(({ darkMode, onToggle }) => (
-  <button
-    onClick={onToggle}
-    className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
-  >
-    {darkMode ? (
-      <FaSun className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-    ) : (
-      <FaMoon className="w-4 h-4 text-gray-500 dark:text-gray-500" />
-    )}
-  </button>
-));
-
-const SettingsButton = memo(({ showSettings, onToggle, darkMode, onThemeToggle }) => (
-  <div className="relative settings-tooltip">
-    <button
-      onClick={onToggle}
-      className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-      title="Settings"
-    >
-      <FaCog className="w-4 h-4" />
-    </button>
-
-    {showSettings && (
-      <div className="absolute bottom-full right-0 mb-2 p-2.5 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50">
-        <div className="space-y-2">
-          <div className="flex items-center justify-between space-x-8">
-            <span className="text-sm text-gray-600 dark:text-gray-300">Theme</span>
-            <ThemeToggle darkMode={darkMode} onToggle={onThemeToggle} />
-          </div>
-        </div>
-      </div>
-    )}
-  </div>
-));
+};
 
 const StatusBar = () => {
   const { 
-    logs, 
     darkMode, 
     setDarkMode,
     selectedLogs,
     setSelectedLogs,
     isComparing,
     startComparison,
-    cancelComparison
+    cancelComparison,
+    totalLogsCount
   } = useLog();
-  const { isConnected, showErrorModal, setShowErrorModal, lastError } = useServerStatus();
+  const { isConnected } = useServerStatus();
   
   const [showServerInfo, setShowServerInfo] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -153,64 +51,121 @@ const StatusBar = () => {
     setSelectedLogs(prev => prev.filter(l => l.id !== logId));
   }, [setSelectedLogs]);
 
-  const toggleServerInfo = useCallback(() => {
-    setShowServerInfo(prev => !prev);
-  }, []);
-
-  const toggleSettings = useCallback(() => {
-    setShowSettings(prev => !prev);
-  }, []);
-
-  const toggleDarkMode = useCallback(() => {
-    setDarkMode(prev => !prev);
-  }, [setDarkMode]);
-
   return (
-    <>
-      <div className="flex items-center justify-between px-4 py-2 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-2">
-            <StatusIndicator 
-              isConnected={isConnected} 
-              showServerInfo={showServerInfo}
-              onToggle={toggleServerInfo}
-            />
-            <div className="flex items-center space-x-2">
-              <LogCount count={logs.length} />
-              
-              {selectedLogs.length > 0 && (
-                <>
-                  <div className="w-px h-4 bg-gray-300 dark:bg-gray-600 mx-2" />
-                  <div className="flex items-center space-x-2">
-                    <SelectedLogs logs={selectedLogs} onRemove={handleRemoveLog} />
-                    {selectedLogs.length === 2 && (
-                      <CompareButton 
-                        isComparing={isComparing}
-                        onStart={startComparison}
-                        onCancel={cancelComparison}
-                      />
-                    )}
-                  </div>
-                </>
+    <div className="flex items-center justify-between w-full h-10 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+      <div className="flex items-center space-x-4 px-4">
+        <div className="flex items-center space-x-2">
+          <div className="relative status-indicator">
+            <div 
+              className={`w-3 h-3 ${isConnected ? 'bg-green-500' : 'bg-red-500'} rounded-full cursor-pointer`}
+              onClick={() => setShowServerInfo(prev => !prev)}
+            >
+              {isConnected && (
+                <div className="absolute w-3 h-3 bg-green-500 rounded-full animate-ping" />
               )}
             </div>
+            <ServerInfoTooltip isConnected={isConnected} show={showServerInfo} />
           </div>
-        </div>
+          
+          <span className="text-sm text-gray-500 dark:text-gray-400">
+            {totalLogsCount} logs
+          </span>
 
-        <div className="text-sm text-gray-500 dark:text-gray-400 flex items-center space-x-3">
-          <div className="w-px h-4 bg-gray-300 dark:bg-gray-600" />
-          <SettingsButton 
-            showSettings={showSettings}
-            onToggle={toggleSettings}
-            darkMode={darkMode}
-            onThemeToggle={toggleDarkMode}
-          />
+          {selectedLogs.length > 0 && (
+            <>
+              <div className="w-px h-4 bg-gray-300 dark:bg-gray-600 mx-2" />
+              <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2 bg-gray-50 dark:bg-gray-700/50 px-2 py-1 rounded-md">
+                  {selectedLogs.map((log, index) => (
+                    <React.Fragment key={log.id}>
+                      <div className="flex items-center space-x-1">
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                          Log {index + 1}
+                        </span>
+                        <button
+                          onClick={() => handleRemoveLog(log.id)}
+                          className="p-0.5 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-full text-gray-500 dark:text-gray-400"
+                        >
+                          <FaTimes className="w-3 h-3" />
+                        </button>
+                      </div>
+                      {index === 0 && selectedLogs.length === 2 && (
+                        <FaExchangeAlt className="w-3 h-3 text-gray-400 mx-1" />
+                      )}
+                    </React.Fragment>
+                  ))}
+                </div>
+                {selectedLogs.length === 2 && (
+                  <button
+                    onClick={isComparing ? cancelComparison : startComparison}
+                    className={`px-2.5 py-1 ${isComparing ? 'bg-red-500 hover:bg-red-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-md text-sm font-medium transition-colors`}
+                  >
+                    {isComparing ? 'Cancel' : 'Compare'}
+                  </button>
+                )}
+              </div>
+            </>
+          )}
         </div>
       </div>
+      <div className="flex items-center space-x-4 px-4">
+        <div className="flex items-center space-x-4">
+          <a
+            href="https://github.com/xRay-Log/xRay"
+            target="_blank"
+            className="cursor-pointer flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            <FaGithub className="w-4 h-4" />
+            <span className="text-sm">GitHub</span>
+          </a>
 
-      <CompareModal />
-    </>
+          <div className="w-px h-4 bg-gray-300 dark:bg-gray-600"></div>
+
+          <div className="relative settings-tooltip">
+            <button
+              onClick={() => setShowSettings(prev => !prev)}
+              className="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
+            >
+              <FaCog className="w-4 h-4" />
+              <span className="text-sm">Settings</span>
+            </button>
+
+            {showSettings && (
+              <div className="absolute bottom-full right-0 mb-2 p-2.5 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between space-x-8">
+                    <span className="text-sm text-gray-600 dark:text-gray-300">Theme</span>
+                    <button
+                      onClick={() => setDarkMode(prev => !prev)}
+                      className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                      {darkMode ? (
+                        <FaSun className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                      ) : (
+                        <FaMoon className="w-4 h-4 text-gray-500 dark:text-gray-500" />
+                      )}
+                    </button>
+                  </div>
+                  <div className="border-t border-gray-200 dark:border-gray-700 pt-2">
+                    <a
+                      href="https://www.buymeacoffee.com/muhammetus"
+                      target="_blank"
+                    >
+                      <img
+                        src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+                        alt="Buy Me A Coffee"
+                        className="h-8 w-auto hover:opacity-90 transition-opacity"
+                      />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default memo(StatusBar);
+export default StatusBar;
