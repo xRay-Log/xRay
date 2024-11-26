@@ -10,7 +10,7 @@ export const API_ENDPOINTS = {
 // Log Levels
 export const LOG_LEVELS = [
   { level: 'error', color: '#ef4444', label: 'Error' },
-  { level: 'warn', color: '#f59e0b', label: 'Warning' },
+  { level: 'warning', color: '#f59e0b', label: 'Warning' },
   { level: 'info', color: '#3b82f6', label: 'Info' },
   { level: 'debug', color: '#10b981', label: 'Debug' }
 ];

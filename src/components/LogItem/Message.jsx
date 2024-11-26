@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, memo } from 'react';
+import JsonView from 'react18-json-view';
+import 'react18-json-view/src/style.css'
 
 const styles = `
   :host {
@@ -7,17 +9,29 @@ const styles = `
   }
   .content {
     margin: 0;
-    padding-top: 2em;
     overflow: auto;
     background-color: transparent;
   }
 `;
+
+const isJSON = (str) => {
+  try {
+    const result = JSON.parse(str);
+    return typeof result === 'object';
+  } catch (e) {
+    return false;
+  }
+};
 
 const Message = ({ data }) => {  
   const containerRef = useRef(null);
   const hostRef = useRef(null);
 
   useEffect(() => {
+    if (isJSON(data)) {
+      return;
+    }
+
     if (!containerRef.current) return;
 
     const host = document.createElement('div');
@@ -38,6 +52,21 @@ const Message = ({ data }) => {
       hostRef.current?.remove();
     };
   }, [data]);
+
+  if (isJSON(data)) {
+    return (
+      <>
+        <JsonView
+          src={JSON.parse(data)}
+          theme="default"
+          displayObjectSize={false}
+          displayDataTypes={false}
+          enableClipboard={false}
+          collapseStringsAfterLength={80}
+        />
+      </>
+    );
+  }
 
   return <div ref={containerRef} />;
 };

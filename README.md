@@ -30,36 +30,6 @@ A modern, high-performance log management and comparison application built with 
 - ⚡ High-performance rendering
 - 🎯 Cross-platform support
 
-## Tech Stack
-
-- React
-- Tauri
-- Tailwind CSS
-- IndexedDB
-- Framer Motion
-
-## Project Structure
-
-```
-src/
-├── components/          # React components
-│   ├── CompareModal/   # Log comparison modal
-│   ├── FilterBar/      # Filtering interface
-│   ├── LogItem/        # Log entry components
-│   ├── LogList/        # Log list and empty states
-│   ├── Sidebar/        # Application sidebar
-│   └── StatusBar/      # Status information bar
-├── context/            # React context for state management
-├── hooks/              # Custom React hooks
-│   ├── useBookmarks    # Bookmark management
-│   ├── useLogSelection # Log selection handling
-│   └── useServerStatus # Server connection status
-├── db/                 # IndexedDB configuration
-├── services/           # API services
-├── utils/              # Utility functions
-└── constants/          # Application constants
-```
-
 ## Installation
 
 1. Clone the repository:
@@ -91,8 +61,21 @@ yarn tauri dev
 
 - `yarn tauri dev` - Start development server
 - `yarn tauri build` - Build production version
-- `yarn lint` - Run ESLint
 - `yarn format` - Format code with Prettier
+
+### Example Usage
+
+Send logs to xRay using curl:
+```bash
+curl -s -L -X POST 'http://localhost:44827/receive' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "level": "INFO",
+    "payload": "{\"email\":\"muhammetuss@gmail.com\"}",
+    "trace": "null",
+    "project": "Users Service"
+}'
+```
 
 ## Features in Detail
 

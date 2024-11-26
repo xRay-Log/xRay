@@ -1,20 +1,21 @@
 use axum::{
-    extract::Json, 
+    extract::State,
+    response::Json as AxumJson,
     routing::{get, post},
     Router,
-    response::Json as AxumJson,
-    extract::State
 };
-use serde::{Deserialize};
+use serde::{Deserialize, Serialize};
+use serde_json;
 use std::net::SocketAddr;
-use tauri::{async_runtime, AppHandle};
-use tower_http::cors::{CorsLayer, Any};
 use tauri::Emitter;
+use tauri::{async_runtime, AppHandle};
+use tower_http::cors::{Any, CorsLayer};
 
 // Main function to start Tauri and HTTP server
 #[tokio::main]
 async fn main() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_shell::init())
         .setup(|app| {
             let app_handle = app.handle().clone(); // Clone the app handle for async task
             async_runtime::spawn(async move {
@@ -28,7 +29,6 @@ async fn main() {
 
 // Start HTTP server
 async fn start_http_server(app_handle: tauri::AppHandle) {
-    
     let cors = CorsLayer::new()
         .allow_origin(Any)
         .allow_methods(Any)
@@ -41,7 +41,6 @@ async fn start_http_server(app_handle: tauri::AppHandle) {
         .with_state(app_handle);
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 44827));
-    println!("Server running on http://{}", addr);
 
     let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
     axum::serve(listener, app).await.unwrap();
@@ -53,7 +52,7 @@ async fn health_check() -> &'static str {
 }
 
 // Data model for /receive endpoint
-#[derive(Debug, Deserialize)]
+#[derive(Serialize, Deserialize)]
 struct Payload {
     project: String,
     level: String,
@@ -64,18 +63,19 @@ struct Payload {
 // Receive endpoint with Tauri event emit
 async fn receive_payload(
     State(app_handle): State<AppHandle>,
-    Json(input): Json<Payload>
+    AxumJson(input): AxumJson<Payload>,
 ) -> AxumJson<String> {
-    
-    let input_string = format!(
-        "{{\"project\":\"{}\",\"level\":\"{}\",\"payload\":\"{}\",\"trace\":\"{}\"}}",
-        input.project,input.level,  input.payload, input.trace
-    );
+    let input_string = match serde_json::to_string(&input) {
+        Ok(json) => json,
+        Err(e) => {
+            eprintln!("Failed to serialize input to JSON: {}", e);
+            return AxumJson("Failed to process payload".to_string());
+        }
+    };
 
     if let Err(e) = app_handle.emit("log", &input_string) {
         eprintln!("Failed to emit event: {}", e);
     }
-    //println!(String(app_handle));
 
     AxumJson("Data received!".to_string())
 }

@@ -2,22 +2,15 @@ import React, { memo, useCallback } from 'react';
 import { useLog } from '../../context/LogContext';
 import LogItem from '../LogItem';
 import EmptyState from './EmptyState';
-
-const LogItemMemo = memo(({ log, isSelected, onSelect, selectionMode }) => (
-  <LogItem 
-    key={log.id} 
-    log={log}
-    isSelected={isSelected}
-    onSelect={onSelect}
-    selectionMode={selectionMode}
-  />
-));
+import CompareModal from './CompareModal';
 
 const LogList = () => {
-  const { 
-    logs, 
-    selectedLogs, 
+  const {
+    logs,
+    selectedLogs,
+    isComparing,
     toggleLogSelection,
+    cancelComparison,
   } = useLog();
 
   const handleSelect = useCallback((logId) => {
@@ -29,20 +22,29 @@ const LogList = () => {
   }
 
   const selectionMode = selectedLogs.length > 0;
-
+  //console.log("comparing", isComparing);
   return (
-    <div className="space-y-2 p-4">
-      {logs.map((log) => (
-        <LogItemMemo 
-          key={log.id} 
-          log={log}
-          isSelected={selectedLogs.includes(log.id)}
-          onSelect={() => handleSelect(log.id)}
-          selectionMode={selectionMode}
+    <>
+      <div className="space-y-2 p-4" role="log">
+        {logs.map((log) => (
+          <LogItem 
+            key={log.id} 
+            log={log}
+            isSelected={selectedLogs.includes(log.id)}
+            onSelect={() => handleSelect(log.id)}
+            selectionMode={selectionMode}
+          />
+        ))}
+      </div>
+      {isComparing && (
+        <CompareModal
+          isOpen={isComparing}
+          logs={logs.filter(log => selectedLogs.includes(log.id))}
+          onClose={cancelComparison}
         />
-      ))}
-    </div>
+      )}
+    </>
   );
 };
 
-export default memo(LogList);
+export default (LogList);

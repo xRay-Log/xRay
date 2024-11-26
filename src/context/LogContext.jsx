@@ -1,10 +1,11 @@
-import React, { createContext, useContext, useEffect, useState, useCallback, useMemo } from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { listen } from '@tauri-apps/api/event';
-import * as db from '../db/indexedDB';
+import { db } from '../db/xrayDb';
 import { LOG_LEVELS } from '../constants';
+import { useLiveQuery } from 'dexie-react-hooks';
 
-const LogContext = createContext(null);
+export const LogContext = createContext(null);
 
 const getInitialDarkMode = () => {
   const savedTheme = localStorage.getItem('theme');
@@ -17,69 +18,62 @@ const processLogData = (data) => ({
   timestamp: new Date().toISOString(),
   level: data.level.toLowerCase(),
   project: data.project,
-  message: atob(data.payload),
+  message: data.payload,
   trace: data.trace || null
 });
 
-const useDatabase = (setLogs, setProjects, setBookmarkedLogs) => {
-  const [dbInstance, setDbInstance] = useState(null);
+const useDatabase = ( setProjects) => {
+  
+  const unlistenRef = useRef(null);
+  const isInitializedRef = useRef(false);
 
   useEffect(() => {
-    const initializeDatabase = async () => {
+    if (isInitializedRef.current) return;
+    console.log("start xRay database");
+    const initialize = async () => {
       try {
-        const database = await db.initDB();
-        setDbInstance(database);
+        await db.init();
 
-        const [storedLogs, projectList, bookmarks] = await Promise.all([
-          db.getLogs(database),
-          db.getAllProjects(database),
-          db.getBookmarks(database)
+        const [projectList, bookmarkIds] = await Promise.all([
+          db.getAllProjects()
         ]);
 
-        setLogs(storedLogs);
+        const bookmarkSet = new Set(bookmarkIds);
         setProjects(projectList);
-        setBookmarkedLogs(new Set(bookmarks));
+      
+
+        if (!unlistenRef.current) {
+          unlistenRef.current = await listen('log', async (event) => {
+            try {
+              const logData = processLogData(JSON.parse(event.payload));
+              await db.addLog(logData);
+              
+              setProjects(prevProjects => {
+                if (prevProjects.includes(logData.project)) return prevProjects;
+                return [...prevProjects, logData.project];
+              });
+            } catch (error) {
+              console.error('Log processing error:', error);
+            }
+          });
+        }
+
+        isInitializedRef.current = true;
       } catch (error) {
         console.error('Database initialization error:', error);
       }
     };
 
-    initializeDatabase();
-  }, [setLogs, setProjects, setBookmarkedLogs]);
+    initialize();
 
-  return dbInstance;
-};
-
-const useLogListener = (dbInstance, setLogs, setProjects) => {
-  useEffect(() => {
-    if (!dbInstance) return;
-
-    let unlistenFn;
-    const setupLogListener = async () => {
-      try {
-        unlistenFn = await listen('log', async (event) => {
-          try {
-            const logData = processLogData(JSON.parse(event.payload));
-            await db.addLog(dbInstance, logData);
-            
-            setLogs(prevLogs => [logData, ...prevLogs]);
-            setProjects(prevProjects => 
-              prevProjects.includes(logData.project) 
-                ? prevProjects 
-                : [...prevProjects, logData.project]
-            );
-          } catch (error) {
-            console.error('Log processing error:', error);
-          }
-        });
-      } catch (error) {
-        console.error('Log listener setup error:', error);
+    return () => {
+      if (unlistenRef.current) {
+        unlistenRef.current();
+        unlistenRef.current = null;
       }
+      isInitializedRef.current = false;
     };
-
-    setupLogListener();
-    return () => unlistenFn?.();
-  }, [dbInstance, setLogs, setProjects]);
+  }, [isInitializedRef]);
 };
 
 const useThemeEffect = (darkMode) => {
@@ -90,48 +84,48 @@ const useThemeEffect = (darkMode) => {
 };
 
 export const LogProvider = ({ children }) => {
-  const [logs, setLogs] = useState([]);
   const [projects, setProjects] = useState([]);
-  const [selectedProject, setSelectedProject] = useState(null);
   const [selectedLogs, setSelectedLogs] = useState([]);
   const [isComparing, setIsComparing] = useState(false);
   const [bookmarkedLogs, setBookmarkedLogs] = useState(new Set());
-  const [selectedLevels, setSelectedLevels] = useState(
-    new Set(LOG_LEVELS.map(({ level }) => level))
-  );
   const [darkMode, setDarkMode] = useState(getInitialDarkMode);
-  const [showBookmarksOnly, setShowBookmarksOnly] = useState(false);
+  const [filters, setFilters] = useState({
+    levels: new Set(LOG_LEVELS.map(({ level }) => level)),
+    project: null,
+    bookmark: false
+  });
 
-  const dbInstance = useDatabase(setLogs, setProjects, setBookmarkedLogs);
-  useLogListener(dbInstance, setLogs, setProjects);
+  const logs = useLiveQuery(
+    () => db.liveFilteredLogs(filters),
+    [filters]
+  ) || [];
+
+  const updateFilters = useCallback((newFilters) => {
+    setFilters(prev => ({ ...prev, ...newFilters }));
+  }, []);
+
+  useDatabase(setProjects);
+  
   useThemeEffect(darkMode);
 
   const deleteLog = useCallback(async (logId) => {
-    if (!dbInstance) return;
-
     try {
-      await db.deleteLog(dbInstance, logId);
-      setLogs(prev => {
-        const updated = prev.filter(log => log.id !== logId);
-        setProjects([...new Set(updated.map(log => log.project))]);
-        return updated;
-      });
+      await db.deleteLog(logId);
+      
     } catch (error) {
       console.error('Log deletion error:', error);
     }
-  }, [dbInstance]);
+  }, []);
 
   const clearLogs = useCallback(async () => {
-    if (!dbInstance) return;
-
     try {
-      await db.clearLogs(dbInstance);
-      setLogs([]);
+      await db.clearLogs();
+      updateFilters({ project: null, bookmark: false });
       setProjects([]);
     } catch (error) {
       console.error('Log clearing error:', error);
     }
-  }, [dbInstance]);
+  }, []);
 
   const toggleLogSelection = useCallback((logId) => {
     setSelectedLogs(prev => {
@@ -141,37 +135,49 @@ export const LogProvider = ({ children }) => {
   }, []);
 
   const toggleBookmark = useCallback(async (log) => {
-    if (!dbInstance) return;
-
     try {
-      const newBookmarks = new Set(bookmarkedLogs);
+      const newBookmarks = new Set([...bookmarkedLogs]);
       const hasBookmark = newBookmarks.has(log.id);
       
       if (hasBookmark) {
         newBookmarks.delete(log.id);
-        await db.removeBookmark(dbInstance, log.id);
+        await db.removeBookmark(log.id);
       } else {
         newBookmarks.add(log.id);
-        await db.addBookmark(dbInstance, log.id);
+        await db.addBookmark(log.id);
       }
       
       setBookmarkedLogs(newBookmarks);
     } catch (error) {
       console.error('Bookmark operation error:', error);
     }
-  }, [dbInstance, bookmarkedLogs]);
+  }, [bookmarkedLogs]);
 
-  const filteredLogs = useMemo(() => {
-    return logs.filter(log => {
-      const levelMatch = selectedLevels.has(log.level.toLowerCase());
-      const projectMatch = !selectedProject || log.project === selectedProject;
-      const bookmarkMatch = !showBookmarksOnly || bookmarkedLogs.has(log.id);
-      return levelMatch && projectMatch && bookmarkMatch;
-    });
-  }, [logs, selectedLevels, selectedProject, showBookmarksOnly, bookmarkedLogs]);
+  const totalLogsCount = useMemo(() => {
+    if (!logs) return 0;
+    
+    let count = [...logs];
+    
+    if (filters.bookmark) {
+      count = count.filter(log => bookmarkedLogs.has(log.id));
+    }
+    
+    count = count.filter(log => filters.levels.has(log.level.toLowerCase()));
+    
+    if (filters.project) {
+      count = count.filter(log => log.project === filters.project);
+    }
+    
+    return count.length;
+  }, [logs, bookmarkedLogs, filters]);
 
   const startComparison = useCallback(() => {
-    if (selectedLogs.length === 2) setIsComparing(true);
+    console.log("loggs",selectedLogs.length);
+    if (selectedLogs.length === 2) {
+      if (logs.some(log => selectedLogs.includes(log.id))) {
+        setIsComparing(true);
+      }
+    }
   }, [selectedLogs]);
 
   const cancelComparison = useCallback(() => {
@@ -179,37 +185,32 @@ export const LogProvider = ({ children }) => {
     setIsComparing(false);
   }, []);
 
-  const contextValue = useMemo(() => ({
-    logs: filteredLogs,
-    allLogs: logs,
+  const value = {
+    logs,
     projects,
-    selectedProject,
-    setSelectedProject,
-    deleteLog,
-    clearLogs,
+    selectedProject: filters.project,
+    toggleLogSelection,
+    selectedLogs,
+    setSelectedLogs,
+    isComparing,
+    setIsComparing,
+    bookmarkedLogs,
+    selectedLevels: filters.levels,
     darkMode,
     setDarkMode,
-    selectedLogs,
-    toggleLogSelection,
+    showBookmarksOnly: filters.bookmark,
+    deleteLog,
+    toggleBookmark,
+    clearLogs,
+    filters,
+    updateFilters,
     startComparison,
     cancelComparison,
-    isComparing,
-    bookmarkedLogs,
-    toggleBookmark,
-    selectedLevels,
-    setSelectedLevels,
-    showBookmarksOnly,
-    setShowBookmarksOnly
-  }), [
-    filteredLogs, logs, projects, selectedProject, deleteLog, 
-    clearLogs, darkMode, selectedLogs, toggleLogSelection, 
-    startComparison, cancelComparison, isComparing, 
-    bookmarkedLogs, toggleBookmark, selectedLevels,
-    showBookmarksOnly
-  ]);
+    totalLogsCount
+  };
 
   return (
-    <LogContext.Provider value={contextValue}>
+    <LogContext.Provider value={value}>
       {children}
     </LogContext.Provider>
   );
@@ -218,7 +219,7 @@ export const LogProvider = ({ children }) => {
 export const useLog = () => {
   const context = useContext(LogContext);
   if (!context) {
-    throw new Error('useLog hook must be used within LogProvider');
+    throw new Error('useLog must be used within a LogProvider');
   }
   return context;
 };

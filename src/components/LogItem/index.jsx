@@ -2,18 +2,17 @@ import React, { useState, memo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { 
   FaInfoCircle, FaBookmark, FaRegBookmark, 
-  FaExchangeAlt, FaTrash, FaCopy, FaDownload, FaCheck 
+  FaExchangeAlt, FaTrash, FaCopy, FaCheck 
 } from 'react-icons/fa';
 import { useLog } from '../../context/LogContext';
-import { useBookmarks } from '../../hooks';
-import { formatTime, getLevelColor } from '../../utils/formatters';
+import { formatTime } from '../../utils/formatters';
 import TraceDetailsModal from './TraceModal';
 import Message from './Message';
 
-const ActionButton = memo(({ onClick, className, title, icon: Icon, stopPropagation = true }) => (
+const ActionButton = memo(({ onClick, className, title, icon: Icon }) => (
   <button
     onClick={(e) => {
-      if (stopPropagation) e.stopPropagation();
+      e.stopPropagation();
       onClick(e);
     }}
     className={`p-2 rounded-lg text-gray-400 hover:text-gray-600 
@@ -51,34 +50,106 @@ const CopyButton = memo(({ onClick, isCopied }) => (
   </button>
 ));
 
-const LogHeader = memo(({ log, darkMode, levelColor }) => (
+const SelectionCheckbox = memo(({ isSelected }) => (
+  <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center
+    ${isSelected 
+      ? 'border-blue-500 bg-blue-500' 
+      : 'border-gray-300 dark:border-gray-600'
+    }`}
+  >
+    {isSelected && <FaCheck className="w-3 h-3 text-white" />}
+  </div>
+));
+
+const LogLevel = memo(({ level }) => {
+  const getLogLevelClass = (level) => {
+    switch (level?.toLowerCase()) {
+      case 'error':
+        return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300';
+      case 'warning':
+        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300';
+      case 'info':
+        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300';
+      case 'debug':
+        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300';
+      default:
+        return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
+    }
+  };
+
+  return (
+    <span className={`px-2 py-1 text-xs font-medium rounded-md ${getLogLevelClass(level)}`}>
+      {(level || 'INFO').toUpperCase()}
+    </span>
+  );
+});
+
+const LogActions = memo(({ 
+  log, 
+  bookmarkedLogs, 
+  onTraceClick, 
+  onBookmarkToggle, 
+
+  onDelete,
+  onCompare,
+  selectionMode,
+  hideActions = false
+}) => {
+  if (hideActions) return null;
+  
+  return (
+    <div className="flex items-center space-x-1">
+      {log.trace && (
+        <ActionButton
+          onClick={() => onTraceClick(log.trace)}
+          title="View Trace Details"
+          icon={FaInfoCircle}
+        />
+      )}
+      <ActionButton
+        onClick={() => onBookmarkToggle(log)}
+        title={bookmarkedLogs.has(log.id) ? "Remove Bookmark" : "Add Bookmark"}
+        icon={bookmarkedLogs.has(log.id) ? FaBookmark : FaRegBookmark}
+        className={bookmarkedLogs.has(log.id) ? "text-blue-500" : ""}
+      />
+      {!selectionMode && (
+        <>
+          <ActionButton
+            onClick={onCompare}
+            title="Compare Log"
+            icon={FaExchangeAlt}
+          />
+          <ActionButton
+            onClick={() => onDelete(log.id)}
+            title="Delete Log"
+            icon={FaTrash}
+            className="hover:text-red-500 dark:hover:text-red-400
+              hover:bg-red-50 dark:hover:bg-red-900/20"
+          />
+        </>
+      )}
+    </div>
+  );
+});
+
+const LogHeader = memo(({ log, darkMode }) => (
   <div className="flex items-center space-x-4">
-    <div
-      className="w-2 h-2 rounded-full"
-      style={{ backgroundColor: levelColor }}
-    />
+    <LogLevel level={log.level} />
     <span className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
       {formatTime(log.timestamp || new Date())}
-    </span>
-    <span className={`text-sm font-medium ${darkMode ? 'text-gray-200' : 'text-gray-700'}`}>
-      {(log.level || 'INFO').toUpperCase()}
     </span>
   </div>
 ));
 
-const LogItem = ({ log, isSelected, onSelect, selectionMode }) => {
-  const { darkMode, deleteLog } = useLog();
-  const { bookmarkedLogs, handleBookmarkToggle } = useBookmarks();
+const LogItem = ({ log, isSelected, onSelect, selectionMode, hideActions = false }) => {
+  const { darkMode, deleteLog, startComparison, selectedLogs,bookmarkedLogs,toggleBookmark } = useLog();
   const [copiedLogId, setCopiedLogId] = useState(null);
   const [showTraceModal, setShowTraceModal] = useState(false);
   const [currentTrace, setCurrentTrace] = useState(null);
 
-  const levelColor = getLevelColor(log.level || 'info');
-
   const handleTraceClick = useCallback((trace) => {
-    if (!trace) return;
     try {
-      const traceData = typeof trace === 'string' ? JSON.parse(trace) : trace;
+      const traceData = trace;
       setCurrentTrace(traceData);
       setShowTraceModal(true);
     } catch (error) {
@@ -88,31 +159,22 @@ const LogItem = ({ log, isSelected, onSelect, selectionMode }) => {
     }
   }, []);
 
-  const handleCopyLog = useCallback(async (log) => {
+  const handleCopyLog = useCallback(async () => {
     try {
-      await navigator.clipboard.writeText(JSON.stringify(log, null, 2));
+      await navigator.clipboard.writeText(log.message || '');
       setCopiedLogId(log.id);
       setTimeout(() => setCopiedLogId(null), 2000);
     } catch (error) {
       console.error('Failed to copy log:', error);
     }
-  }, []);
+  }, [log]);
 
-  const handleDownloadLog = useCallback(async (log) => {
-    try {
-      const blob = new Blob([JSON.stringify(log, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `log-${log.id}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Failed to download log:', error);
+  const handleCompare = useCallback(() => {
+    onSelect(log.id);
+    if (selectedLogs.length === 1) {
+      startComparison();
     }
-  }, []);
+  }, [log.id, selectedLogs.length, onSelect, startComparison]);
 
   return (
     <>
@@ -127,76 +189,37 @@ const LogItem = ({ log, isSelected, onSelect, selectionMode }) => {
         } ${
           isSelected ? 'ring-2 ring-blue-500' : ''
         }`}
-        onClick={selectionMode ? onSelect : undefined}
+        onClick={selectionMode ? () => onSelect(log.id) : undefined}
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            {selectionMode && (
-              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center
-                ${isSelected 
-                  ? 'border-blue-500 bg-blue-500' 
-                  : 'border-gray-300 dark:border-gray-600'
-                }`}
-              >
-                {isSelected && <FaCheck className="w-3 h-3 text-white" />}
-              </div>
-            )}
-            <LogHeader log={log} darkMode={darkMode} levelColor={levelColor} />
+            {selectionMode && <SelectionCheckbox isSelected={isSelected} />}
+            <LogHeader log={log} darkMode={darkMode} />
           </div>
 
-          <div className="flex items-center space-x-1">
-            {log.trace && (
-              <ActionButton
-                onClick={() => handleTraceClick(log.trace)}
-                title="View Trace Details"
-                icon={FaInfoCircle}
-              />
-            )}
-            <ActionButton
-              onClick={() => handleBookmarkToggle(log)}
-              title={bookmarkedLogs.has(log.id) ? "Remove Bookmark" : "Add Bookmark"}
-              icon={bookmarkedLogs.has(log.id) ? FaBookmark : FaRegBookmark}
-              className={bookmarkedLogs.has(log.id) ? "text-blue-500" : ""}
-            />
-            {!selectionMode && (
-              <>
-                <ActionButton
-                  onClick={onSelect}
-                  title="Compare Log"
-                  icon={FaExchangeAlt}
-                />
-                <ActionButton
-                  onClick={() => deleteLog(log.id)}
-                  title="Delete Log"
-                  icon={FaTrash}
-                  className="hover:text-red-500 dark:hover:text-red-400
-                    hover:bg-red-50 dark:hover:bg-red-900/20"
-                />
-              </>
-            )}
-          </div>
+          <LogActions
+            log={log}
+            bookmarkedLogs={bookmarkedLogs}
+            onTraceClick={handleTraceClick}
+            onBookmarkToggle={toggleBookmark}
+            onSelect={onSelect}
+            onDelete={deleteLog}
+            onCompare={handleCompare}
+            selectionMode={selectionMode}
+            hideActions={hideActions}
+          />
         </div>
 
         <div className="mt-3 relative group">
-          <div className="font-mono text-sm whitespace-pre-wrap bg-gray-50 dark:bg-gray-900 rounded relative z-0">
+          <div className="font-mono text-sm whitespace-pre-wrap bg-gray-50 dark:bg-gray-900 rounded p-4">
             <Message data={log.message || ''} />
           </div>
           
-          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex items-center space-x-1.5 z-10">
+          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <CopyButton
-              onClick={() => handleCopyLog(log)}
+              onClick={handleCopyLog}
               isCopied={copiedLogId === log.id}
             />
-
-            <button
-              onClick={() => handleDownloadLog(log)}
-              className="h-8 px-2 rounded-md bg-white dark:bg-gray-800 shadow-sm 
-                hover:bg-gray-50 dark:hover:bg-gray-700 
-                transition-colors flex items-center"
-              title="Download Log"
-            >
-              <FaDownload className="w-3.5 h-3.5 text-gray-400 dark:text-gray-500" />
-            </button>
           </div>
         </div>
       </motion.div>
@@ -211,5 +234,4 @@ const LogItem = ({ log, isSelected, onSelect, selectionMode }) => {
     </>
   );
 };
-
 export default memo(LogItem);
