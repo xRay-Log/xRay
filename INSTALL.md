@@ -1,6 +1,6 @@
 # Installation Guide
 
-This guide provides detailed instructions for installing and running xRay Logs on different operating systems.
+This guide provides detailed instructions for installing and running xRay on different operating systems.
 
 ## macOS
 

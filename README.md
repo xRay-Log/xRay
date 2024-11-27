@@ -1,10 +1,10 @@
-# xRay Logs
+# xRay
 
 A modern, high-performance log management and comparison application built with React and Tauri.
 
-> **⚠️ Beta Notice**: xRay Logs is currently in beta. While it's stable for daily use, you may encounter occasional bugs. Please report any issues you find on our [GitHub Issues](https://github.com/XRay-Log/xRay/issues) page.
+> **⚠️ Beta Notice**: xRay is currently in beta. While it's stable for daily use, you may encounter occasional bugs. Please report any issues you find on our [GitHub Issues](https://github.com/XRay-Log/xRay/issues) page.
 
-![XRay Logs Dark Mode](https://media.licdn.com/dms/image/v2/D4D22AQGMdhIcg6tm9g/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1732297848909?e=1735171200&v=beta&t=k_kukR_drXE7j-rg7v36_UzsoHi10FFZKnctdOVfItc)
+![XRay Dark Mode](https://media.licdn.com/dms/image/v2/D4D22AQGMdhIcg6tm9g/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1732297848909?e=1735171200&v=beta&t=k_kukR_drXE7j-rg7v36_UzsoHi10FFZKnctdOVfItc)
 
 ## Download
 

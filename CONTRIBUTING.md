@@ -1,6 +1,6 @@
-# Contributing to xRay Logs
+# Contributing to xRay
 
-Thank you for your interest in contributing to xRay Logs! Here's how you can help:
+Thank you for your interest in contributing to xRay! Here's how you can help:
 
 ## How to Contribute
 

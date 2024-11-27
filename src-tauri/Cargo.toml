@@ -2,7 +2,7 @@
 name = "xRay"
 version = "0.1.0"
 description = "A modern, high-performance log management and comparison application"
-authors = ["XRay Log Team"]
+authors = ["XRay Team"]
 license = "MIT"
 repository = "https://github.com/XRay-Log/xRay"
 edition = "2021"
