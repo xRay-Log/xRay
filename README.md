@@ -57,12 +57,6 @@ yarn tauri dev
 - Tauri CLI
 - Yarn package manager
 
-### Available Scripts
-
-- `yarn tauri dev` - Start development server
-- `yarn tauri build` - Build production version
-- `yarn format` - Format code with Prettier
-
 ### Example Usage
 
 Send logs to xRay using curl:
