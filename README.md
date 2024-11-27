@@ -17,6 +17,8 @@ A modern, high-performance log management and comparison application built with 
 
 </div>
 
+> **Note**: For detailed installation instructions and troubleshooting, please see our [Installation Guide](INSTALL.md).
+
 ## Features
 
 - 🚀 Real-time log monitoring
@@ -30,7 +32,7 @@ A modern, high-performance log management and comparison application built with 
 - ⚡ High-performance rendering
 - 🎯 Cross-platform support
 
-## Installation
+## Development
 
 1. Clone the repository:
 ```bash
@@ -47,8 +49,6 @@ yarn install
 ```bash
 yarn tauri dev
 ```
-
-## Development
 
 ### Prerequisites
 
