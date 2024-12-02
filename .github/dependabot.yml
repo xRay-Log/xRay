@@ -17,3 +17,20 @@ updates:
     reviewers:
       - "muhammetus"
     target-branch: "main"
+
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "deps"
+      prefix-development: "dev"
+      include: "scope"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "npm"
+    reviewers:
+      - "muhammetus"
+    target-branch: "main"
+    versioning-strategy: "auto"
