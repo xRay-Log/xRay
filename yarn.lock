@@ -1385,9 +1385,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:^11.11.17":
-  version: 11.11.17
-  resolution: "framer-motion@npm:11.11.17"
+"framer-motion@npm:^11.12.0":
+  version: 11.12.0
+  resolution: "framer-motion@npm:11.12.0"
   dependencies:
     tslib: ^2.4.0
   peerDependencies:
@@ -1401,7 +1401,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 5d81b814938132e45472088e45a28d9187267817387729b89c048c1789bae5da9ed9a7a484d4e0ad7b5dfb1a39ebb8fade3cbcd55ded86b218195759a4417727
+  checksum: 4459441812886eccd4f883d89f9fb62804bedb2488916c5791ff55a404c35edb21dbd2501bec3f71357a4d60b35d55de64fa987dbbad3b72d2f76683a05ebc17
   languageName: node
   linkType: hard
 
@@ -2907,7 +2907,7 @@ __metadata:
     autoprefixer: ^10.4.20
     dexie: ^4.0.10
     dexie-react-hooks: ^1.1.7
-    framer-motion: ^11.11.17
+    framer-motion: ^11.12.0
     postcss: ^8.4.49
     react: ^18.3.1
     react-dom: ^18.3.1
