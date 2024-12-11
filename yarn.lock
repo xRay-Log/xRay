@@ -1385,17 +1385,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:^11.13.1":
-  version: 11.13.1
-  resolution: "framer-motion@npm:11.13.1"
+"framer-motion@npm:^11.13.5":
+  version: 11.13.5
+  resolution: "framer-motion@npm:11.13.5"
   dependencies:
     motion-dom: ^11.13.0
     motion-utils: ^11.13.0
     tslib: ^2.4.0
   peerDependencies:
     "@emotion/is-prop-valid": "*"
-    react: ^18.0.0
-    react-dom: ^18.0.0
+    react: ^18.0.0 || ^19.0.0
+    react-dom: ^18.0.0 || ^19.0.0
   peerDependenciesMeta:
     "@emotion/is-prop-valid":
       optional: true
@@ -1403,7 +1403,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: d5733ace2b44bb386c535bbe36006ad0a3bd3d4d0f1150e2c51e76fc577b798280043d9216e597954003fa9fc4a35fd0841fe37d285246b583040cb739547901
+  checksum: bb9f1e63587c4a6458b30b1fe3cc504f0643d6210b0ebe04129e639abc4e18430fa4436999c771048a145fdf465ee7ca53bdf8a4f82c6cec5d72b615922cb94e
   languageName: node
   linkType: hard
 
@@ -2923,7 +2923,7 @@ __metadata:
     autoprefixer: ^10.4.20
     dexie: ^4.0.10
     dexie-react-hooks: ^1.1.7
-    framer-motion: ^11.13.1
+    framer-motion: ^11.13.5
     postcss: ^8.4.49
     react: ^18.3.1
     react-dom: ^18.3.1
