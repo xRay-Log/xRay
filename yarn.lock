@@ -1385,17 +1385,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:^11.13.1":
-  version: 11.13.1
-  resolution: "framer-motion@npm:11.13.1"
+"framer-motion@npm:^11.14.1":
+  version: 11.14.1
+  resolution: "framer-motion@npm:11.14.1"
   dependencies:
-    motion-dom: ^11.13.0
-    motion-utils: ^11.13.0
+    motion-dom: ^11.14.1
+    motion-utils: ^11.14.1
     tslib: ^2.4.0
   peerDependencies:
     "@emotion/is-prop-valid": "*"
-    react: ^18.0.0
-    react-dom: ^18.0.0
+    react: ^18.0.0 || ^19.0.0
+    react-dom: ^18.0.0 || ^19.0.0
   peerDependenciesMeta:
     "@emotion/is-prop-valid":
       optional: true
@@ -1403,7 +1403,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: d5733ace2b44bb386c535bbe36006ad0a3bd3d4d0f1150e2c51e76fc577b798280043d9216e597954003fa9fc4a35fd0841fe37d285246b583040cb739547901
+  checksum: 6a540564c8faf0239996517891fa4ad3ee950cf3a0628cc088b3d2a7f1f097e9f8e6e8575cb053a3185f47d26e1022a2fbf9ed97c300beabbd77d7b579ffd229
   languageName: node
   linkType: hard
 
@@ -1960,17 +1960,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"motion-dom@npm:^11.13.0":
-  version: 11.13.0
-  resolution: "motion-dom@npm:11.13.0"
-  checksum: cc5df1e244ca0bb8f2492a9177e02fcae5b8ccc18cefbd71d2c7d3a18cf8e1aa630e02e04c1b1fa92a876bae7aa2b35dd84f416f4fda600ff5fa22622961b6a8
+"motion-dom@npm:^11.14.1":
+  version: 11.14.1
+  resolution: "motion-dom@npm:11.14.1"
+  checksum: 5b0f88b6ffa1b8d299b98879594d9b3c723e9c19c8ed36c115fa09bfe7c8ee01c53116c914589dade4a4f9d3e0bc5843775f0f6ff0dac2c7cb6705ffd3a33b8b
   languageName: node
   linkType: hard
 
-"motion-utils@npm:^11.13.0":
-  version: 11.13.0
-  resolution: "motion-utils@npm:11.13.0"
-  checksum: 0ebb405d859f64cb3711c42525536f9fe8aaee7f9386357ba4fd75ede9f27a868f4e6f14b821db7470c1ca15d07a6bb18918d891a32c50c515b07ba5e1d428ed
+"motion-utils@npm:^11.14.1":
+  version: 11.14.1
+  resolution: "motion-utils@npm:11.14.1"
+  checksum: 0ac4cfc12761a0ceec85cc3d0fb99de269914c82cb2eaa7735deef22ecddfbd2a1bb206a66ffe997c530f818e2517419f3b69b3e1c14478384cb54e50b4a6331
   languageName: node
   linkType: hard
 
@@ -2923,7 +2923,7 @@ __metadata:
     autoprefixer: ^10.4.20
     dexie: ^4.0.10
     dexie-react-hooks: ^1.1.7
-    framer-motion: ^11.13.1
+    framer-motion: ^11.14.1
     postcss: ^8.4.49
     react: ^18.3.1
     react-dom: ^18.3.1
