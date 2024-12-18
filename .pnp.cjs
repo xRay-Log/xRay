@@ -37,7 +37,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["dexie-react-hooks", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:1.1.7"],\
             ["framer-motion", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:11.14.1"],\
             ["postcss", "npm:8.4.49"],\
-            ["react", "npm:18.3.1"],\
+            ["react", "npm:19.0.0"],\
             ["react-dom", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:19.0.0"],\
             ["react-icons", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:5.4.0"],\
             ["react-syntax-highlighter", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:15.6.1"],\
@@ -1460,7 +1460,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/dexie", null],\
             ["@types/react", null],\
             ["dexie", "npm:4.0.10"],\
-            ["react", "npm:18.3.1"]\
+            ["react", "npm:19.0.0"]\
           ],\
           "packagePeers": [\
             "@types/dexie",\
@@ -1693,7 +1693,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react-dom", null],\
             ["motion-dom", "npm:11.14.1"],\
             ["motion-utils", "npm:11.14.1"],\
-            ["react", "npm:18.3.1"],\
+            ["react", "npm:19.0.0"],\
             ["react-dom", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:19.0.0"],\
             ["tslib", "npm:2.8.1"]\
           ],\
@@ -2123,16 +2123,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/lines-and-columns-npm-1.2.4-d6c7cc5799-0c37f9f7fa.zip/node_modules/lines-and-columns/",\
           "packageDependencies": [\
             ["lines-and-columns", "npm:1.2.4"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["loose-envify", [\
-        ["npm:1.4.0", {\
-          "packageLocation": "./.yarn/cache/loose-envify-npm-1.4.0-6307b72ccf-6517e24e0c.zip/node_modules/loose-envify/",\
-          "packageDependencies": [\
-            ["loose-envify", "npm:1.4.0"],\
-            ["js-tokens", "npm:4.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -2730,11 +2720,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["react", [\
-        ["npm:18.3.1", {\
-          "packageLocation": "./.yarn/cache/react-npm-18.3.1-af38f3c1ae-a27bcfa8ff.zip/node_modules/react/",\
+        ["npm:19.0.0", {\
+          "packageLocation": "./.yarn/cache/react-npm-19.0.0-e33c9aa1c0-86de15d85b.zip/node_modules/react/",\
           "packageDependencies": [\
-            ["react", "npm:18.3.1"],\
-            ["loose-envify", "npm:1.4.0"]\
+            ["react", "npm:19.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -2752,7 +2741,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["react-dom", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:19.0.0"],\
             ["@types/react", null],\
-            ["react", "npm:18.3.1"],\
+            ["react", "npm:19.0.0"],\
             ["scheduler", "npm:0.25.0"]\
           ],\
           "packagePeers": [\
@@ -2775,7 +2764,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["react-icons", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:5.4.0"],\
             ["@types/react", null],\
-            ["react", "npm:18.3.1"]\
+            ["react", "npm:19.0.0"]\
           ],\
           "packagePeers": [\
             "@types/react",\
@@ -2811,7 +2800,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["highlightjs-vue", "npm:1.0.0"],\
             ["lowlight", "npm:1.20.0"],\
             ["prismjs", "npm:1.29.0"],\
-            ["react", "npm:18.3.1"],\
+            ["react", "npm:19.0.0"],\
             ["refractor", "npm:3.6.0"]\
           ],\
           "packagePeers": [\
@@ -2834,7 +2823,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["react18-json-view", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:0.2.8"],\
             ["@types/react", null],\
-            ["react", "npm:18.3.1"]\
+            ["react", "npm:19.0.0"]\
           ],\
           "packagePeers": [\
             "@types/react",\
@@ -3423,7 +3412,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["dexie-react-hooks", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:1.1.7"],\
             ["framer-motion", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:11.14.1"],\
             ["postcss", "npm:8.4.49"],\
-            ["react", "npm:18.3.1"],\
+            ["react", "npm:19.0.0"],\
             ["react-dom", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:19.0.0"],\
             ["react-icons", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:5.4.0"],\
             ["react-syntax-highlighter", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:15.6.1"],\
