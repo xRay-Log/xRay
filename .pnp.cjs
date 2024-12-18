@@ -35,7 +35,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["autoprefixer", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:10.4.20"],\
             ["dexie", "npm:4.0.10"],\
             ["dexie-react-hooks", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:1.1.7"],\
-            ["framer-motion", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:11.14.1"],\
+            ["framer-motion", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:11.15.0"],\
             ["postcss", "npm:8.4.49"],\
             ["react", "npm:18.3.1"],\
             ["react-dom", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:19.0.0"],\
@@ -1676,23 +1676,23 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["framer-motion", [\
-        ["npm:11.14.1", {\
-          "packageLocation": "./.yarn/cache/framer-motion-npm-11.14.1-0c739e2a95-6a540564c8.zip/node_modules/framer-motion/",\
+        ["npm:11.15.0", {\
+          "packageLocation": "./.yarn/cache/framer-motion-npm-11.15.0-10b61b9e68-94ad254ca4.zip/node_modules/framer-motion/",\
           "packageDependencies": [\
-            ["framer-motion", "npm:11.14.1"]\
+            ["framer-motion", "npm:11.15.0"]\
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:11.14.1", {\
-          "packageLocation": "./.yarn/__virtual__/framer-motion-virtual-391400b681/0/cache/framer-motion-npm-11.14.1-0c739e2a95-6a540564c8.zip/node_modules/framer-motion/",\
+        ["virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:11.15.0", {\
+          "packageLocation": "./.yarn/__virtual__/framer-motion-virtual-cc5c78359a/0/cache/framer-motion-npm-11.15.0-10b61b9e68-94ad254ca4.zip/node_modules/framer-motion/",\
           "packageDependencies": [\
-            ["framer-motion", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:11.14.1"],\
+            ["framer-motion", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:11.15.0"],\
             ["@emotion/is-prop-valid", null],\
             ["@types/emotion__is-prop-valid", null],\
             ["@types/react", null],\
             ["@types/react-dom", null],\
-            ["motion-dom", "npm:11.14.1"],\
-            ["motion-utils", "npm:11.14.1"],\
+            ["motion-dom", "npm:11.14.3"],\
+            ["motion-utils", "npm:11.14.3"],\
             ["react", "npm:18.3.1"],\
             ["react-dom", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:19.0.0"],\
             ["tslib", "npm:2.8.1"]\
@@ -2314,19 +2314,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["motion-dom", [\
-        ["npm:11.14.1", {\
-          "packageLocation": "./.yarn/cache/motion-dom-npm-11.14.1-a0a8e1fa1f-5b0f88b6ff.zip/node_modules/motion-dom/",\
+        ["npm:11.14.3", {\
+          "packageLocation": "./.yarn/cache/motion-dom-npm-11.14.3-e0aada28cc-af9e6f6bfd.zip/node_modules/motion-dom/",\
           "packageDependencies": [\
-            ["motion-dom", "npm:11.14.1"]\
+            ["motion-dom", "npm:11.14.3"]\
           ],\
           "linkType": "HARD"\
         }]\
       ]],\
       ["motion-utils", [\
-        ["npm:11.14.1", {\
-          "packageLocation": "./.yarn/cache/motion-utils-npm-11.14.1-c6983c2bf9-0ac4cfc127.zip/node_modules/motion-utils/",\
+        ["npm:11.14.3", {\
+          "packageLocation": "./.yarn/cache/motion-utils-npm-11.14.3-77ffa86ed3-49ca9cd573.zip/node_modules/motion-utils/",\
           "packageDependencies": [\
-            ["motion-utils", "npm:11.14.1"]\
+            ["motion-utils", "npm:11.14.3"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -3421,7 +3421,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["autoprefixer", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:10.4.20"],\
             ["dexie", "npm:4.0.10"],\
             ["dexie-react-hooks", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:1.1.7"],\
-            ["framer-motion", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:11.14.1"],\
+            ["framer-motion", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:11.15.0"],\
             ["postcss", "npm:8.4.49"],\
             ["react", "npm:18.3.1"],\
             ["react-dom", "virtual:a818425a1296e954a789d8a5fd70537835321da19509d6510415a659db0486677bfaafcc5921f20ca6209d1332736a2945ae5ba3cd5a8f17a44c5e48885d12c3#npm:19.0.0"],\
