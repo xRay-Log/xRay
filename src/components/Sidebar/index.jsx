@@ -3,7 +3,7 @@ import { FaFolder, FaBookmark } from 'react-icons/fa';
 import { useLog } from '../../context/LogContext';
 import { useServerStatus } from '../../hooks';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { db } from '../../db/xRayDb';
+import { db } from '../../db';
 
 const getButtonClasses = (isActive) => ({
   container: `w-full flex items-center justify-between px-3 py-1.5 text-sm transition-all duration-150 ${
