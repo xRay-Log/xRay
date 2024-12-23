@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to `xray` will be documented in this file.
+All notable changes to `xRay` will be documented in this file.
 
 ## v0.3.2 - 2024-12-18
 
