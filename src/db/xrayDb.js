@@ -1,6 +1,6 @@
 import Dexie from 'dexie';
 
-class XRayDatabase extends Dexie {
+class xRayDatabase extends Dexie {
   constructor() {
     super('xRayDB');
     
@@ -174,6 +174,6 @@ class XRayDatabase extends Dexie {
   }
 }
 
-const db = new XRayDatabase();
+const db = new xRayDatabase();
 
 export { db };

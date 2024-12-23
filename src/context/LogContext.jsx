@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { listen } from '@tauri-apps/api/event';
-import { db } from '../db/xrayDb';
+import { db } from '../db/xRayDb';
 import { LOG_LEVELS } from '../constants';
 import { useLiveQuery } from 'dexie-react-hooks';
 
