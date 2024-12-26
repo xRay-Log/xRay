@@ -2,6 +2,10 @@
 
 All notable changes to `xRay` will be documented in this file.
 
+## v1.0.0 - 2024-12-26
+
+**Full Changelog**: https://github.com/xRay-Log/xRay/compare/v0.3.2...v1.0.0
+
 ## v0.3.2 - 2024-12-18
 
 ### What's Changed
