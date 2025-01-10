@@ -40,7 +40,7 @@ A modern, high-performance log management and comparison application built with 
 |----------|---------------|---------------|
 | <img src="https://raw.githubusercontent.com/github/explore/56a826d05cf762b2b50ecbe7d492a839b04f3fbf/topics/laravel/laravel.png" width="24"> Laravel | [![Latest Version on Packagist](https://img.shields.io/packagist/v/xray-log/laravel.svg?style=flat-square)](https://packagist.org/packages/xray-log/laravel) | [Documentation](https://github.com/xRay-Log/laravel#readme) |
 | <img src="https://raw.githubusercontent.com/github/explore/ccc16358ac4530c6a69b1b80c7223cd2744dea83/topics/php/php.png" width="24"> PHP | [![Latest Version on Packagist](https://img.shields.io/packagist/v/xray-log/php-sdk.svg?style=flat-square)](https://packagist.org/packages/xray-log/php-sdk) | [Documentation](https://github.com/xRay-Log/php-sdk#readme) |
-| <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/javascript/javascript.png" width="24"> JavaScript | [![npm version](https://badge.fury.io/js/@xray-log%2Fjavascript-sdk.svg)](https://www.npmjs.com/package/@xray-log/javascript-sdk) | [Documentation](https://github.com/xRay-Log/javascript-sdk#readme) |
+| <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/javascript/javascript.png" width="24"> JavaScript | [![npm version](https://badge.fury.io/js/@xraylog%2Fjavascript-sdk.svg)](https://www.npmjs.com/package/@xraylog/javascript-sdk) | [Documentation](https://github.com/xRay-Log/javascript-sdk#readme) |
 
 </div>
 
